@@ -37,7 +37,7 @@ namespace AdminBanHang.DAL
             conn.Close();
             return dt;
         }
-        public static Boolean Trung(string username)
+        public static bool Trung(string username)
         {
             conn.Open();
             string sql = "select count(*) from Emplopyee where Username='" + username +"'";

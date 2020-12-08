@@ -6,7 +6,7 @@ namespace AdminBanHang.BLL
 {
     class EmployeeBLL
     {
-        public Boolean Login(string username, string password)
+        public bool Login(string username, string password)
         {
             return DAL.EmployeeDAL.Login(username, password);
         }
