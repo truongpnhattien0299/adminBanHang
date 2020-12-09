@@ -28,5 +28,11 @@ namespace AdminBanHang.GUI
             QuanlyProduct quanlyProduct = new QuanlyProduct();
             quanlyProduct.Show();
         }
+
+        private void comboToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuanlyCombo quanlyCombo = new QuanlyCombo();
+            quanlyCombo.Show();
+        }
     }
 }

@@ -32,6 +32,7 @@
             this.quảnLýToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nhaVienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +50,8 @@
             // 
             this.quảnLýToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nhaVienToolStripMenuItem,
-            this.productToolStripMenuItem});
+            this.productToolStripMenuItem,
+            this.comboToolStripMenuItem});
             this.quảnLýToolStripMenuItem.Name = "quảnLýToolStripMenuItem";
             this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.quảnLýToolStripMenuItem.Text = "Quản lý";
@@ -67,6 +69,13 @@
             this.productToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.productToolStripMenuItem.Text = "Sản Phẩm";
             this.productToolStripMenuItem.Click += new System.EventHandler(this.productToolStripMenuItem_Click);
+            // 
+            // comboToolStripMenuItem
+            // 
+            this.comboToolStripMenuItem.Name = "comboToolStripMenuItem";
+            this.comboToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.comboToolStripMenuItem.Text = "Combo";
+            this.comboToolStripMenuItem.Click += new System.EventHandler(this.comboToolStripMenuItem_Click);
             // 
             // Dashboard
             // 
@@ -90,5 +99,6 @@
         private System.Windows.Forms.ToolStripMenuItem quảnLýToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nhaVienToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem comboToolStripMenuItem;
     }
 }

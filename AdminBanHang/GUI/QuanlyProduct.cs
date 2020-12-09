@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
 using AdminBanHang.DTO;
@@ -53,20 +47,10 @@ namespace AdminBanHang.GUI
             comboSearchCategory.DisplayMember = "CategoryName";
         }
 
-        private void LoadImage()
+        private void LoadImage(DataTable dataTable)
         {
-            ProductBLL productBLL = new ProductBLL();
             imageList = new ImageList() { ImageSize = new Size(70, 70) };
-            foreach (DataRow row in productBLL.GetAllProduct().Rows)
-            {
-                imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
-            }
-        }
-        private void LoadImageSearch(int idtype, int idcate, string text)
-        {
-            ProductBLL productBLL = new ProductBLL();
-            imageList = new ImageList() { ImageSize = new Size(70, 70) };
-            foreach (DataRow row in productBLL.Search(idtype, idcate, text).Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
             }
@@ -80,14 +64,13 @@ namespace AdminBanHang.GUI
                 Types idtype = (Types)comboSearchType.SelectedItem;
                 Category idcate = (Category)comboSearchCategory.SelectedItem;
                 string text = txtSearch.Text;
-                LoadImageSearch(idtype.Id, idcate.Id, text);
                 dataTable = productBLL.Search(idtype.Id, idcate.Id, text);
             }
             else
             {
-                LoadImage();
                 dataTable = productBLL.GetAllProduct();
             }
+            LoadImage(dataTable);
             listViewProduct.Clear();
             listViewProduct.View = View.Details;
             listViewProduct.FullRowSelect = true;
@@ -102,7 +85,6 @@ namespace AdminBanHang.GUI
             listViewProduct.Columns.Add("Mô tả",200);
 
             ListViewItem lvitem;
-            int stt = 1;
             foreach (DataRow row in dataTable.Rows)
             {
                 lvitem = new ListViewItem();
@@ -114,7 +96,6 @@ namespace AdminBanHang.GUI
                 lvitem.SubItems.Add(row.Field<int>("Price").ToString());
                 lvitem.SubItems.Add(row.Field<string>("Detail"));
                 listViewProduct.Items.Add(lvitem);
-                stt++;
             }    
         }
         private void Click_listview(object sender, EventArgs e)
@@ -181,7 +162,14 @@ namespace AdminBanHang.GUI
 
             /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
             product.image = path;
-            File.Copy(fullpath, destpath+path);
+            try
+            {
+                File.Copy(fullpath, destpath + path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             productBLL.AddProduct(product);
             LoadListview();
@@ -221,7 +209,6 @@ namespace AdminBanHang.GUI
             LoadListview();
             flag = false;
         }
-        
         private void btnSearch_Click(object sender, EventArgs e)
         {
             clickSearch = true;
