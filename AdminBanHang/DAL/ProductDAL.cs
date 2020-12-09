@@ -49,6 +49,21 @@ namespace AdminBanHang.DAL
                 return list;
             }    
         }
+
+        public static string pathImage(int id)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select Image from product where Id="+id;
+                SqlCommand command = new SqlCommand(sql, conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                conn.Close();
+                return dt.Rows[0][0].ToString();
+            }    
+        }
         public static void AddProduct(Product product)
         {
             using(SqlConnection conn = DBConnection.GetConnection())
@@ -68,7 +83,42 @@ namespace AdminBanHang.DAL
                 com.ExecuteNonQuery();
                 conn.Close();
             }    
-
-        }    
+        } 
+        public static void EditProduct(Product product, int id)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string productname = product.productname;
+                string image = product.image;
+                int amount = product.amount;
+                int price = product.price;
+                string detail = product.detail;
+                int category_id = product.categoryid;
+                string sql = @"UPDATE Product SET Productname = '" + productname
+                                                  + "', Category_ID = " + category_id
+                                                  + ", Amount = " + amount
+                                                  + ", Price = " + price
+                                                  + ", Detail = '" + detail
+                                                  + "', Image = '" + image
+                            + "' WHERE Id =" + id;
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }    
+        }
+        public static void DeleteProduct(int id)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "DELETE FROM Product WHERE Id= " + id;
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }    
+        }
+        public static DataTable Search()
+        { return null; }    
     }
 }

@@ -79,6 +79,12 @@
     <Compile Include="GUI\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\QuanlyCombo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\QuanlyCombo.Designer.cs">
+      <DependentUpon>QuanlyCombo.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\QuanLyNhanvien.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\QuanlyCombo.resx">
+      <DependentUpon>QuanlyCombo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\QuanLyNhanvien.resx">
       <DependentUpon>QuanLyNhanvien.cs</DependentUpon>

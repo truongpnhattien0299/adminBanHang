@@ -16,9 +16,11 @@ namespace AdminBanHang.GUI
 {
     public partial class QuanlyProduct : Form
     {
-        ImageList imageList;
+        private ImageList imageList;
         private string folder = @"E:\All\";
         private string path = "", fullpath = "", destpath = @"E:\All\";
+        private bool flag = false;
+        private int id = -1;
         public QuanlyProduct()
         {
             InitializeComponent();
@@ -49,6 +51,7 @@ namespace AdminBanHang.GUI
             ProductBLL productBLL = new ProductBLL();
             listViewProduct.Clear();
             listViewProduct.View = View.Details;
+            listViewProduct.FullRowSelect = true;
             listViewProduct.SmallImageList = imageList;
 
             listViewProduct.Columns.Add("Hình ảnh", 70);
@@ -58,7 +61,6 @@ namespace AdminBanHang.GUI
             listViewProduct.Columns.Add("Số lượng");
             listViewProduct.Columns.Add("Giá tiền");
             listViewProduct.Columns.Add("Mô tả",200);
-
 
             ListViewItem lvitem;
             int stt = 1;
@@ -75,15 +77,28 @@ namespace AdminBanHang.GUI
                 listViewProduct.Items.Add(lvitem);
                 stt++;
             }    
-
         }
 
         private void Click_listview(object sender, EventArgs e)
         {
-            string viewItem = listViewProduct.SelectedItems[0].SubItems[0].Text;
-            MessageBox.Show(viewItem);
+            txtProductname.Text = listViewProduct.SelectedItems[0].SubItems[1].Text;
+            category.Text = listViewProduct.SelectedItems[0].SubItems[2].Text;
+            amount.Value = decimal.Parse(listViewProduct.SelectedItems[0].SubItems[4].Text);
+            price.Value = decimal.Parse(listViewProduct.SelectedItems[0].SubItems[5].Text);
+            txtDetail.Text = listViewProduct.SelectedItems[0].SubItems[6].Text;
+            int idproduct = int.Parse(listViewProduct.SelectedItems[0].ImageKey);
+            LoadPreviewImage(idproduct);
+            id = idproduct;
         }
 
+        private void LoadPreviewImage(int id)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            path = productBLL.pathImage(id);
+            previewImage.Image = Image.FromFile(folder+path);
+            previewImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            lblNameImage.Text = path;
+        }
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             openFileDialog.InitialDirectory = @"E:\";
@@ -100,6 +115,7 @@ namespace AdminBanHang.GUI
                         previewImage.Image = Image.FromFile(fullpath);
                         previewImage.SizeMode = PictureBoxSizeMode.StretchImage;
                         lblNameImage.Text = path;
+                        flag = true;
                     }
                 }
                 else
@@ -112,7 +128,6 @@ namespace AdminBanHang.GUI
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void btnThem_Click(object sender, EventArgs e)
         {
             ProductBLL productBLL = new ProductBLL();
@@ -132,6 +147,40 @@ namespace AdminBanHang.GUI
 
             productBLL.AddProduct(product);
             LoadListview();
+            flag = false;
+        }
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            Product product = new Product();
+            product.productname = txtProductname.Text;
+            product.detail = txtDetail.Text;
+            product.price = int.Parse(price.Value.ToString());
+            product.amount = int.Parse(amount.Value.ToString());
+
+            /* Lấy Id từ commobox đưa vào cơ sở dữ liệu */
+            Category s = (Category)category.SelectedItem;
+            product.categoryid = s.Id;
+
+            /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
+            product.image = path;
+            if(flag) File.Copy(fullpath, destpath + path);
+
+            productBLL.EditProduct(product, id);
+            LoadListview();
+        }
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            productBLL.DeleteProduct(id);
+            txtProductname.Text = "";
+            txtDetail.Text = "";
+            amount.Value = 0;
+            price.Value = 0;
+            lblNameImage.Text = "Chưa có ảnh";
+            previewImage.Image = null;
+            LoadListview();
+            flag = false;
         }
     }
 }
