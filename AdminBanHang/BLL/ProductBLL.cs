@@ -14,11 +14,14 @@ namespace AdminBanHang.BLL
         {
             return DAL.ProductDAL.GetAllProduct();
         }
-        public List<Category> GetAllCategory()
+        public List<Types> GetAllType()
         {
-            return DAL.ProductDAL.GetAllCategory();
+            return DAL.ProductDAL.GetAllType();
         }
-
+        public List<Category> GetCategory(int id)
+        {
+            return DAL.ProductDAL.GetCategory(id);
+        }
         public string pathImage(int id)
         {
             return DAL.ProductDAL.pathImage(id);
@@ -34,6 +37,10 @@ namespace AdminBanHang.BLL
         public void DeleteProduct(int id)
         {
             DAL.ProductDAL.DeleteProduct(id);
+        }
+        public DataTable Search(int idtype, int idcate, string text)
+        {
+            return DAL.ProductDAL.Search(idtype, idcate, text);
         }
     }
 }

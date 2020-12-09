@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AdminBanHang.DTO;
 
 namespace AdminBanHang.DAL
@@ -16,7 +13,7 @@ namespace AdminBanHang.DAL
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 conn.Open();
-                string sql = "select * from Product, Category, Taxonomy where Product.Category_ID = Category.Id and Taxonomy.Id = Category.Taxonomy_Id";
+                string sql = "select * from Product, Type, Category where Product.Category_ID = Category.Id and Type.Id = Category.Type_Id";
                 SqlCommand command = new SqlCommand(sql, conn);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -25,13 +22,35 @@ namespace AdminBanHang.DAL
                 return dt;
             }
         }
-
-        public static List<Category> GetAllCategory()
+        public static List<Types> GetAllType()
         {
             using(SqlConnection conn = DBConnection.GetConnection())
             {
                 conn.Open();
-                string sql = "select * from Category";
+                string sql = "select * from Type";
+                SqlCommand command = new SqlCommand(sql, conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                List<Types> list = new List<Types>();
+                foreach (DataRow item in dt.Rows)
+                {
+                    Types type = new Types();
+                    type.Id = item.Field<int>("Id");
+                    type.TypeName = item.Field<string>("TypeName");
+                    list.Add(type);
+                }
+                conn.Close();
+                return list;
+            }    
+        }
+
+        public static List<Category> GetCategory(int id)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select * from Category WHERE Type_Id="+ id;
                 SqlCommand command = new SqlCommand(sql, conn);
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -42,12 +61,11 @@ namespace AdminBanHang.DAL
                     Category category = new Category();
                     category.Id = item.Field<int>("Id");
                     category.CategoryName = item.Field<string>("CategoryName");
-                    category.Taxonomy_Id = item.Field<int>("Taxonomy_Id");
                     list.Add(category);
                 }
                 conn.Close();
                 return list;
-            }    
+            }
         }
 
         public static string pathImage(int id)
@@ -77,8 +95,8 @@ namespace AdminBanHang.DAL
                 int category_id = product.categoryid;
 
                 string sql = @"INSERT INTO Product VALUES" +
-                                "('" + productname + "'," + category_id + "," + amount + "," + price +
-                                ",'" + detail + "','" + image +"')";
+                                "(N'" + productname + "'," + category_id + "," + amount + "," + price +
+                                ",N'" + detail + "',N'" + image +"')";
                 SqlCommand com = new SqlCommand(sql, conn);
                 com.ExecuteNonQuery();
                 conn.Close();
@@ -95,12 +113,12 @@ namespace AdminBanHang.DAL
                 int price = product.price;
                 string detail = product.detail;
                 int category_id = product.categoryid;
-                string sql = @"UPDATE Product SET Productname = '" + productname
+                string sql = @"UPDATE Product SET Productname = N'" + productname
                                                   + "', Category_ID = " + category_id
                                                   + ", Amount = " + amount
                                                   + ", Price = " + price
-                                                  + ", Detail = '" + detail
-                                                  + "', Image = '" + image
+                                                  + ", Detail = N'" + detail
+                                                  + "', Image = N'" + image
                             + "' WHERE Id =" + id;
                 SqlCommand command = new SqlCommand(sql, conn);
                 command.ExecuteNonQuery();
@@ -118,7 +136,22 @@ namespace AdminBanHang.DAL
                 conn.Close();
             }    
         }
-        public static DataTable Search()
-        { return null; }    
+        public static DataTable Search(int idtype, int idcate, string text)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select * from Product, Type, Category where Product.Category_ID = Category.Id and Type.Id = Category.Type_Id"+
+                                " and Type.Id =  " + idtype +
+                                " and Category.Id = " + idcate +
+                                " and Product.ProductName like N'%"+ text +"%'";
+                SqlCommand command = new SqlCommand(sql, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                conn.Close();
+                return dt;
+            }
+        }    
     }
 }

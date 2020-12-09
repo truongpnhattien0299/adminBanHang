@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdminBanHang.DTO
 {
-    public class Category
+    public class Types
     {
         public int Id { get; set; }
-        public string CategoryName { get; set; }
-        public int Type_Id { get; set; }
+        public string TypeName { get; set; }
     }
 }

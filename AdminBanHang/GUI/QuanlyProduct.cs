@@ -19,23 +19,40 @@ namespace AdminBanHang.GUI
         private ImageList imageList;
         private string folder = @"E:\All\";
         private string path = "", fullpath = "", destpath = @"E:\All\";
-        private bool flag = false;
+        private bool flag = false, clickSearch = false;
         private int id = -1;
         public QuanlyProduct()
         {
             InitializeComponent();
             LoadListview();
-            LoadComboBox();
+            LoadComboType();
         }
 
-        private void LoadComboBox()
+        private void LoadComboType()
         {
             ProductBLL productBLL = new ProductBLL();
-            category.DataSource = productBLL.GetAllCategory();
-            category.DisplayMember = "CategoryName";
-            comboSearch.DataSource = productBLL.GetAllCategory();
-            comboSearch.DisplayMember = "CategoryName";
-        }    
+            comboType.DataSource = productBLL.GetAllType();
+            comboType.DisplayMember = "TypeName";
+            comboSearchType.DataSource = productBLL.GetAllType();
+            comboSearchType.DisplayMember = "TypeName";
+        }
+
+        private void comboType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            Types types = (Types)comboType.SelectedItem;
+            comboCategory.DataSource = productBLL.GetCategory(types.Id);
+            comboCategory.DisplayMember = "CategoryName";
+        }
+
+        private void comboSearchType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            Types types = (Types)comboSearchType.SelectedItem;
+            comboSearchCategory.DataSource = productBLL.GetCategory(types.Id);
+            comboSearchCategory.DisplayMember = "CategoryName";
+        }
+
         private void LoadImage()
         {
             ProductBLL productBLL = new ProductBLL();
@@ -45,10 +62,32 @@ namespace AdminBanHang.GUI
                 imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
             }
         }
+        private void LoadImageSearch(int idtype, int idcate, string text)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            imageList = new ImageList() { ImageSize = new Size(70, 70) };
+            foreach (DataRow row in productBLL.Search(idtype, idcate, text).Rows)
+            {
+                imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
+            }
+        }
         private void LoadListview()
         {
-            LoadImage();
             ProductBLL productBLL = new ProductBLL();
+            DataTable dataTable;
+            if (clickSearch)
+            {
+                Types idtype = (Types)comboSearchType.SelectedItem;
+                Category idcate = (Category)comboSearchCategory.SelectedItem;
+                string text = txtSearch.Text;
+                LoadImageSearch(idtype.Id, idcate.Id, text);
+                dataTable = productBLL.Search(idtype.Id, idcate.Id, text);
+            }
+            else
+            {
+                LoadImage();
+                dataTable = productBLL.GetAllProduct();
+            }
             listViewProduct.Clear();
             listViewProduct.View = View.Details;
             listViewProduct.FullRowSelect = true;
@@ -64,13 +103,13 @@ namespace AdminBanHang.GUI
 
             ListViewItem lvitem;
             int stt = 1;
-            foreach (DataRow row in productBLL.GetAllProduct().Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 lvitem = new ListViewItem();
                 lvitem.ImageKey = row.Field<int>("Id").ToString();
                 lvitem.SubItems.Add( row.Field<string>("Productname"));
+                lvitem.SubItems.Add(row.Field<string>("TypeName"));
                 lvitem.SubItems.Add(row.Field<string>("CategoryName"));
-                lvitem.SubItems.Add(row.Field<string>("TaxonomyName"));
                 lvitem.SubItems.Add(row.Field<int>("Amount").ToString());
                 lvitem.SubItems.Add(row.Field<int>("Price").ToString());
                 lvitem.SubItems.Add(row.Field<string>("Detail"));
@@ -78,11 +117,11 @@ namespace AdminBanHang.GUI
                 stt++;
             }    
         }
-
         private void Click_listview(object sender, EventArgs e)
         {
             txtProductname.Text = listViewProduct.SelectedItems[0].SubItems[1].Text;
-            category.Text = listViewProduct.SelectedItems[0].SubItems[2].Text;
+            comboType.Text = listViewProduct.SelectedItems[0].SubItems[2].Text;
+            comboCategory.Text = listViewProduct.SelectedItems[0].SubItems[3].Text;
             amount.Value = decimal.Parse(listViewProduct.SelectedItems[0].SubItems[4].Text);
             price.Value = decimal.Parse(listViewProduct.SelectedItems[0].SubItems[5].Text);
             txtDetail.Text = listViewProduct.SelectedItems[0].SubItems[6].Text;
@@ -90,7 +129,6 @@ namespace AdminBanHang.GUI
             LoadPreviewImage(idproduct);
             id = idproduct;
         }
-
         private void LoadPreviewImage(int id)
         {
             ProductBLL productBLL = new ProductBLL();
@@ -138,7 +176,7 @@ namespace AdminBanHang.GUI
             product.amount = int.Parse(amount.Value.ToString());
             
             /* Lấy Id từ commobox đưa vào cơ sở dữ liệu */
-            Category s = (Category)category.SelectedItem;
+            Category s = (Category)comboCategory.SelectedItem;
             product.categoryid = s.Id;
 
             /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
@@ -147,8 +185,8 @@ namespace AdminBanHang.GUI
 
             productBLL.AddProduct(product);
             LoadListview();
-            flag = false;
         }
+
         private void btnSua_Click(object sender, EventArgs e)
         {
             ProductBLL productBLL = new ProductBLL();
@@ -159,7 +197,7 @@ namespace AdminBanHang.GUI
             product.amount = int.Parse(amount.Value.ToString());
 
             /* Lấy Id từ commobox đưa vào cơ sở dữ liệu */
-            Category s = (Category)category.SelectedItem;
+            Category s = (Category)comboCategory.SelectedItem;
             product.categoryid = s.Id;
 
             /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
@@ -168,6 +206,7 @@ namespace AdminBanHang.GUI
 
             productBLL.EditProduct(product, id);
             LoadListview();
+            flag = false;
         }
         private void btnXoa_Click(object sender, EventArgs e)
         {
@@ -181,6 +220,17 @@ namespace AdminBanHang.GUI
             previewImage.Image = null;
             LoadListview();
             flag = false;
+        }
+        
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            clickSearch = true;
+            LoadListview();
+        }
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            clickSearch = false;
+            LoadListview();
         }
     }
 }
