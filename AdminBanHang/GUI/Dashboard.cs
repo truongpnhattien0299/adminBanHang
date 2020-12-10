@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AdminBanHang.GUI
@@ -33,6 +26,12 @@ namespace AdminBanHang.GUI
         {
             QuanlyCombo quanlyCombo = new QuanlyCombo();
             quanlyCombo.Show();
+        }
+
+        private void InvoiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuanlyHoadon quanlyHoadon = new QuanlyHoadon();
+            quanlyHoadon.Show();
         }
     }
 }

@@ -39,6 +39,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -59,17 +62,32 @@
     <Compile Include="BLL\ComboBLL.cs" />
     <Compile Include="BLL\CustomerBLL.cs" />
     <Compile Include="BLL\EmployeeBLL.cs" />
+    <Compile Include="BLL\InvoiceBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="DAL\ComboDAL.cs" />
     <Compile Include="DAL\CustomerDAL.cs" />
     <Compile Include="DAL\DBConnection.cs" />
     <Compile Include="DAL\EmployeeDAL.cs" />
+    <Compile Include="DAL\InvoiceDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DTO\Category.cs" />
     <Compile Include="DTO\Combo.cs" />
     <Compile Include="DTO\ComboProduct.cs" />
     <Compile Include="DTO\Customer.cs" />
     <Compile Include="DTO\Employee.cs" />
+    <Compile Include="DTO\Invoice.cs" />
+    <Compile Include="GUI\DialogChangeStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DialogChangeStatus.Designer.cs">
+      <DependentUpon>DialogChangeStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\QuanlyHoadon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\QuanlyHoadon.Designer.cs">
+      <DependentUpon>QuanlyHoadon.cs</DependentUpon>
+    </Compile>
     <Compile Include="DTO\Product.cs" />
     <Compile Include="DTO\Types.cs" />
     <Compile Include="GUI\ChooseProduct.cs">
@@ -125,11 +143,17 @@
     <EmbeddedResource Include="GUI\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DialogChangeStatus.resx">
+      <DependentUpon>DialogChangeStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\QuanlyCombo.resx">
       <DependentUpon>QuanlyCombo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\QuanlyHoadon.resx">
+      <DependentUpon>QuanlyHoadon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\QuanLyNhanvien.resx">
       <DependentUpon>QuanLyNhanvien.cs</DependentUpon>

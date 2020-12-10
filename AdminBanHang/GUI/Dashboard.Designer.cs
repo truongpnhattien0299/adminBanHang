@@ -33,6 +33,7 @@
             this.nhaVienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hóaĐơnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +52,8 @@
             this.quảnLýToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nhaVienToolStripMenuItem,
             this.productToolStripMenuItem,
-            this.comboToolStripMenuItem});
+            this.comboToolStripMenuItem,
+            this.hóaĐơnToolStripMenuItem});
             this.quảnLýToolStripMenuItem.Name = "quảnLýToolStripMenuItem";
             this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.quảnLýToolStripMenuItem.Text = "Quản lý";
@@ -59,23 +61,30 @@
             // nhaVienToolStripMenuItem
             // 
             this.nhaVienToolStripMenuItem.Name = "nhaVienToolStripMenuItem";
-            this.nhaVienToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.nhaVienToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.nhaVienToolStripMenuItem.Text = "Nhân Viên";
             this.nhaVienToolStripMenuItem.Click += new System.EventHandler(this.nhaVienToolStripMenuItem_Click);
             // 
             // productToolStripMenuItem
             // 
             this.productToolStripMenuItem.Name = "productToolStripMenuItem";
-            this.productToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.productToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.productToolStripMenuItem.Text = "Sản Phẩm";
             this.productToolStripMenuItem.Click += new System.EventHandler(this.productToolStripMenuItem_Click);
             // 
             // comboToolStripMenuItem
             // 
             this.comboToolStripMenuItem.Name = "comboToolStripMenuItem";
-            this.comboToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.comboToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.comboToolStripMenuItem.Text = "Combo";
             this.comboToolStripMenuItem.Click += new System.EventHandler(this.comboToolStripMenuItem_Click);
+            // 
+            // hóaĐơnToolStripMenuItem
+            // 
+            this.hóaĐơnToolStripMenuItem.Name = "hóaĐơnToolStripMenuItem";
+            this.hóaĐơnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hóaĐơnToolStripMenuItem.Text = "Hóa đơn";
+            this.hóaĐơnToolStripMenuItem.Click += new System.EventHandler(this.InvoiceToolStripMenuItem_Click);
             // 
             // Dashboard
             // 
@@ -101,5 +110,6 @@
         private System.Windows.Forms.ToolStripMenuItem nhaVienToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comboToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hóaĐơnToolStripMenuItem;
     }
 }
