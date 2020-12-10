@@ -13,7 +13,7 @@ namespace AdminBanHang.DTO
         public DateTime dayStart { get; set; }
         public DateTime dayEnd { get; set; }
         public int total { get; set; }
-        public int discountMoney { get; set; }
+        public string discountMoney { get; set; }
         public string image { get; set; }
     }
 }

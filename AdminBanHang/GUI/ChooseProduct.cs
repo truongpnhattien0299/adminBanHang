@@ -17,7 +17,7 @@ namespace AdminBanHang.GUI
         private ImageList imageList;
         private string folder = @"E:\All\";
         public ArrayList listProduct { get; set; }
-        private int id;
+        public int total { get; set; }
         public ChooseProduct()
         {
             InitializeComponent();
@@ -91,6 +91,23 @@ namespace AdminBanHang.GUI
                 temp.Add(int.Parse(a.ImageKey));
             }
             listProduct = temp;
+        }
+
+        private void ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            int totaltemp = 0;
+            foreach (ListViewItem a in listViewProduct.CheckedItems)
+            {
+                totaltemp += int.Parse(a.SubItems[5].Text);
+            }
+            total = totaltemp;
+            txtTotal.Text = total.ToString("0,0");
+            if (listViewProduct.CheckedItems.Count == 0)
+            {
+                btnOK.Enabled = false;
+                return;
+            }
+            btnOK.Enabled = true;
         }
     }
 }

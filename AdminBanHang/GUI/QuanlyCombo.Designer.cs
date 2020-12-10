@@ -33,6 +33,8 @@
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtTotal = new System.Windows.Forms.TextBox();
             this.numDiscount = new System.Windows.Forms.NumericUpDown();
             this.dayEnd = new System.Windows.Forms.DateTimePicker();
             this.dayStart = new System.Windows.Forms.DateTimePicker();
@@ -45,12 +47,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtComboName = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateSearchEnd = new System.Windows.Forms.DateTimePicker();
+            this.dateSearchStart = new System.Windows.Forms.DateTimePicker();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -76,7 +78,7 @@
             // 
             // btnThem
             // 
-            this.btnThem.Location = new System.Drawing.Point(6, 417);
+            this.btnThem.Location = new System.Drawing.Point(6, 430);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(86, 49);
             this.btnThem.TabIndex = 1;
@@ -86,24 +88,28 @@
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(232, 417);
+            this.btnXoa.Location = new System.Drawing.Point(232, 430);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(94, 49);
             this.btnXoa.TabIndex = 1;
             this.btnXoa.Text = "Xóa Combo";
             this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(118, 417);
+            this.btnSua.Location = new System.Drawing.Point(118, 430);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(89, 49);
             this.btnSua.TabIndex = 1;
             this.btnSua.Text = "Sửa Combo";
             this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.txtTotal);
             this.groupBox1.Controls.Add(this.numDiscount);
             this.groupBox1.Controls.Add(this.dayEnd);
             this.groupBox1.Controls.Add(this.dayStart);
@@ -122,6 +128,23 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Combo";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 403);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Total";
+            // 
+            // txtTotal
+            // 
+            this.txtTotal.Location = new System.Drawing.Point(118, 397);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
+            this.txtTotal.Size = new System.Drawing.Size(200, 20);
+            this.txtTotal.TabIndex = 9;
             // 
             // numDiscount
             // 
@@ -232,12 +255,12 @@
             this.txtComboName.Size = new System.Drawing.Size(200, 20);
             this.txtComboName.TabIndex = 2;
             // 
-            // textBox2
+            // txtSearch
             // 
-            this.textBox2.Location = new System.Drawing.Point(273, 19);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(149, 20);
-            this.textBox2.TabIndex = 2;
+            this.txtSearch.Location = new System.Drawing.Point(273, 19);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(149, 20);
+            this.txtSearch.TabIndex = 2;
             // 
             // btnReset
             // 
@@ -247,6 +270,7 @@
             this.btnReset.TabIndex = 1;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnSearch
             // 
@@ -256,12 +280,13 @@
             this.btnSearch.TabIndex = 1;
             this.btnSearch.Text = "Tìm";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Controls.Add(this.dateTimePicker2);
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
+            this.groupBox2.Controls.Add(this.txtSearch);
+            this.groupBox2.Controls.Add(this.dateSearchEnd);
+            this.groupBox2.Controls.Add(this.dateSearchStart);
             this.groupBox2.Controls.Add(this.btnSearch);
             this.groupBox2.Controls.Add(this.btnReset);
             this.groupBox2.Location = new System.Drawing.Point(362, 12);
@@ -271,19 +296,19 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tìm Kiếm nâng cao";
             // 
-            // dateTimePicker2
+            // dateSearchEnd
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(27, 58);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(198, 20);
-            this.dateTimePicker2.TabIndex = 7;
+            this.dateSearchEnd.Location = new System.Drawing.Point(27, 58);
+            this.dateSearchEnd.Name = "dateSearchEnd";
+            this.dateSearchEnd.Size = new System.Drawing.Size(198, 20);
+            this.dateSearchEnd.TabIndex = 7;
             // 
-            // dateTimePicker1
+            // dateSearchStart
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(27, 19);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(198, 20);
-            this.dateTimePicker1.TabIndex = 7;
+            this.dateSearchStart.Location = new System.Drawing.Point(27, 19);
+            this.dateSearchStart.Name = "dateSearchStart";
+            this.dateSearchStart.Size = new System.Drawing.Size(198, 20);
+            this.dateSearchStart.TabIndex = 7;
             // 
             // openFileDialog
             // 
@@ -315,7 +340,7 @@
             this.btnEditProduct.Name = "btnEditProduct";
             this.btnEditProduct.Size = new System.Drawing.Size(73, 52);
             this.btnEditProduct.TabIndex = 1;
-            this.btnEditProduct.Text = "Sửa Sản phẩm trong Combo";
+            this.btnEditProduct.Text = "Chọn Sản phẩm trong Combo";
             this.btnEditProduct.UseVisualStyleBackColor = true;
             this.btnEditProduct.Click += new System.EventHandler(this.btnEditProduct_Click);
             // 
@@ -323,7 +348,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 512);
+            this.ClientSize = new System.Drawing.Size(1002, 518);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -355,7 +380,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtComboName;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -365,13 +390,15 @@
         private System.Windows.Forms.PictureBox previewImage;
         private System.Windows.Forms.DateTimePicker dayEnd;
         private System.Windows.Forms.DateTimePicker dayStart;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateSearchEnd;
+        private System.Windows.Forms.DateTimePicker dateSearchStart;
         private System.Windows.Forms.NumericUpDown numDiscount;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnEditProduct;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtTotal;
     }
 }

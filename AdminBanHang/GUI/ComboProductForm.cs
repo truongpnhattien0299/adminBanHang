@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
-using AdminBanHang.DTO;
 
 namespace AdminBanHang.GUI
 {
-    public partial class ComboProduct : Form
+    public partial class ComboProductForm : Form
     {
         private int idcombo;
         private ImageList imageList;
@@ -20,7 +13,7 @@ namespace AdminBanHang.GUI
         private string path = "", fullpath = "", destpath = @"E:\All\";
         private bool flag = false, clickSearch = false;
         private int id = -1;
-        public ComboProduct(int idcombo)
+        public ComboProductForm(int idcombo)
         {
             InitializeComponent();
             this.idcombo = idcombo;

@@ -1,6 +1,6 @@
 ﻿namespace AdminBanHang.GUI
 {
-    partial class ComboProduct
+    partial class ComboProductForm
     {
         /// <summary>
         /// Required designer variable.
