@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Data;
 using AdminBanHang.DTO;
 
@@ -33,10 +34,14 @@ namespace AdminBanHang.BLL
         public void EditComboProduct(ArrayList list, int id)
         {
             DAL.ComboDAL.EditComboProduct(list,id);
-        }    
+        }
         public ArrayList ListIDProduct(int id)
         {
             return DAL.ComboDAL.ListIDProduct(id);
+        }
+        public DataTable Search(DateTime start, DateTime end, string text)
+        {
+            return DAL.ComboDAL.Search(start, end, text);
         }
     }
 }

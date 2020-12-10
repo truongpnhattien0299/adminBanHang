@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
+using AdminBanHang.DTO;
 
 namespace AdminBanHang.GUI
 {
     public partial class ChooseProduct : Form
     {
         private ImageList imageList;
+        private bool clickSearch = false;
         private string folder = @"E:\All\";
         public ArrayList listProduct { get; set; }
         public int total { get; set; }
         public ChooseProduct()
         {
             InitializeComponent();
+            LoadComboBoxType();
             LoadListView();
+        }
+        private void LoadComboBoxType()
+        {
+            ProductBLL productBLL = new ProductBLL();
+            comboBoxType.DataSource = productBLL.GetAllType();
+            comboBoxType.DisplayMember = "TypeName";
         }
         public ChooseProduct(ArrayList list)
         {
@@ -31,7 +35,7 @@ namespace AdminBanHang.GUI
         }
         private void LoadImage(DataTable dataTable)
         {
-            imageList = new ImageList() { ImageSize = new Size(70, 70) };
+            imageList = new ImageList() { ImageSize = new Size(80, 80) };
             foreach (DataRow row in dataTable.Rows)
             {
                 imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
@@ -41,7 +45,18 @@ namespace AdminBanHang.GUI
         {
             ProductBLL productBLL = new ProductBLL();
             DataTable dataTable;
-            dataTable = productBLL.GetAllProduct();
+            if(clickSearch)
+            {
+                Types idtype = (Types)comboBoxType.SelectedItem;
+                Category idcate = (Category)comboBoxBrand.SelectedItem;
+                string text = txtSearch.Text;
+                dataTable = productBLL.Search(idtype.Id, idcate.Id, text);
+            }
+            else
+            {
+                dataTable = productBLL.GetAllProduct();
+            }
+            
             LoadImage(dataTable);
             listViewProduct.Clear();
             listViewProduct.View = View.Details;
@@ -49,7 +64,7 @@ namespace AdminBanHang.GUI
             listViewProduct.FullRowSelect = true;
             listViewProduct.SmallImageList = imageList;
 
-            listViewProduct.Columns.Add("Hình ảnh", 70);
+            listViewProduct.Columns.Add("Hình ảnh", 100);
             listViewProduct.Columns.Add("Tên sản phẩm", 100);
             listViewProduct.Columns.Add("Loại sản phẩm", 70);
             listViewProduct.Columns.Add("Taxonomy", 70);
@@ -77,7 +92,7 @@ namespace AdminBanHang.GUI
                 lvitem.SubItems.Add(row.Field<string>("TypeName"));
                 lvitem.SubItems.Add(row.Field<string>("CategoryName"));
                 lvitem.SubItems.Add(row.Field<int>("Amount").ToString());
-                lvitem.SubItems.Add(row.Field<int>("Price").ToString());
+                lvitem.SubItems.Add(row.Field<int>("Price").ToString("0,0"));
                 lvitem.SubItems.Add(row.Field<string>("Detail"));
                 listViewProduct.Items.Add(lvitem);
             }
@@ -98,7 +113,7 @@ namespace AdminBanHang.GUI
             int totaltemp = 0;
             foreach (ListViewItem a in listViewProduct.CheckedItems)
             {
-                totaltemp += int.Parse(a.SubItems[5].Text);
+                totaltemp += int.Parse(a.SubItems[5].Text.Replace(",",""));
             }
             total = totaltemp;
             txtTotal.Text = total.ToString("0,0");
@@ -108,6 +123,26 @@ namespace AdminBanHang.GUI
                 return;
             }
             btnOK.Enabled = true;
+        }
+
+        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            Types types = (Types)comboBoxType.SelectedItem;
+            comboBoxBrand.DataSource = productBLL.GetCategory(types.Id);
+            comboBoxBrand.DisplayMember = "CategoryName";
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            clickSearch = true;
+            LoadListView();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            clickSearch = false;
+            LoadListView();
         }
     }
 }

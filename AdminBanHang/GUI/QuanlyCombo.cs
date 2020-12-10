@@ -41,7 +41,10 @@ namespace AdminBanHang.GUI
         {
             ComboBLL comboBLL = new ComboBLL();
             DataTable dataTable;
-            dataTable = comboBLL.GetAllCombo();
+            if (clickSearch)
+                dataTable = comboBLL.Search(dateSearchStart.Value, dateSearchEnd.Value, txtSearch.Text);
+            else
+                dataTable = comboBLL.GetAllCombo();
             LoadImage(dataTable);
             listViewCombo.Clear();
             listViewCombo.View = View.Details;
@@ -85,7 +88,6 @@ namespace AdminBanHang.GUI
                         previewImage.Image = Image.FromFile(fullpath);
                         previewImage.SizeMode = PictureBoxSizeMode.StretchImage;
                         lblNameImage.Text = path;
-                        flag = true;
                     }
                 }
                 else
@@ -165,12 +167,14 @@ namespace AdminBanHang.GUI
                             total = cp.total;
                             txtTotal.Text = total.ToString("0,0");
                             btnThem.Enabled = true;
+                            flag = true;
                         }
                 }
             }
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
+            clickSearch = false;
             LoadListView();
         }
 
@@ -186,15 +190,15 @@ namespace AdminBanHang.GUI
             dayEnd.Value = DateTime.Now;
             lblNameImage.Text = "Chưa có ảnh";
             previewImage.Image = null;
-            btnThem.Visible = false;
+            btnSua.Enabled = false;
             btnXoa.Enabled = false;
-            btnEditProduct.Enabled = false;
             LoadListView();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            clickSearch = true;
+            LoadListView();
         }
 
         private void btnSua_Click(object sender, EventArgs e)

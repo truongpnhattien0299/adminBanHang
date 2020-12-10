@@ -108,15 +108,26 @@ namespace AdminBanHang.DAL
                 conn.Close();
             }
         }
+        public static DataTable Search(DateTime start, DateTime end, string text)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select * from Combo where DayStart>='"+ FormatDate(start) +"' and DayEnd <='"+ FormatDate(end) +"' and ComboName like N'%"+ text +"%'";
+                SqlCommand command = new SqlCommand(sql, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                conn.Close();
+                return dt;
+            }
+        }    
         private static string FormatDate(DateTime date)
         {
             int day = date.Day;
             int month = date.Month;
             int year = date.Year;
-            int hour = date.Hour;
-            int minute = date.Minute;
-            int second = date.Second;
-            return month + "/" + day + "/" + year + " " + hour + ":" + minute + ":" + second;
+            return month + "/" + day + "/" + year;
 
         }
         public static void EditComboProduct(ArrayList list, int id)

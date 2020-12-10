@@ -55,7 +55,6 @@
             this.dateSearchStart = new System.Windows.Forms.DateTimePicker();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.btnEditProduct = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDiscount)).BeginInit();
@@ -316,7 +315,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.btnEditProduct);
             this.groupBox4.Location = new System.Drawing.Point(807, 12);
             this.groupBox4.Name = "groupBox4";
@@ -325,20 +323,11 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Chức năng";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(97, 26);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(68, 52);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Thêm Combo";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
             // btnEditProduct
             // 
             this.btnEditProduct.Location = new System.Drawing.Point(18, 26);
             this.btnEditProduct.Name = "btnEditProduct";
-            this.btnEditProduct.Size = new System.Drawing.Size(73, 52);
+            this.btnEditProduct.Size = new System.Drawing.Size(147, 52);
             this.btnEditProduct.TabIndex = 1;
             this.btnEditProduct.Text = "Chọn Sản phẩm trong Combo";
             this.btnEditProduct.UseVisualStyleBackColor = true;
@@ -396,7 +385,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnEditProduct;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtTotal;

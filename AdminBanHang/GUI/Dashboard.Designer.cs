@@ -59,21 +59,21 @@
             // nhaVienToolStripMenuItem
             // 
             this.nhaVienToolStripMenuItem.Name = "nhaVienToolStripMenuItem";
-            this.nhaVienToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nhaVienToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.nhaVienToolStripMenuItem.Text = "Nhân Viên";
             this.nhaVienToolStripMenuItem.Click += new System.EventHandler(this.nhaVienToolStripMenuItem_Click);
             // 
             // productToolStripMenuItem
             // 
             this.productToolStripMenuItem.Name = "productToolStripMenuItem";
-            this.productToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.productToolStripMenuItem.Text = "Sản Phẩm";
             this.productToolStripMenuItem.Click += new System.EventHandler(this.productToolStripMenuItem_Click);
             // 
             // comboToolStripMenuItem
             // 
             this.comboToolStripMenuItem.Name = "comboToolStripMenuItem";
-            this.comboToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.comboToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.comboToolStripMenuItem.Text = "Combo";
             this.comboToolStripMenuItem.Click += new System.EventHandler(this.comboToolStripMenuItem_Click);
             // 
@@ -85,6 +85,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Dashboard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dashboard";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

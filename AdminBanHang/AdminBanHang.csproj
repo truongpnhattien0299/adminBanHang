@@ -61,7 +61,6 @@
     <Compile Include="BLL\EmployeeBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="DAL\ComboDAL.cs" />
-    <Compile Include="DAL\ComboProductDAL.cs" />
     <Compile Include="DAL\CustomerDAL.cs" />
     <Compile Include="DAL\DBConnection.cs" />
     <Compile Include="DAL\EmployeeDAL.cs" />
