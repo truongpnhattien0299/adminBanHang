@@ -43,6 +43,11 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.NonGeneric, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.NonGeneric.4.3.0\lib\net46\System.Collections.NonGeneric.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -63,12 +68,14 @@
     <Compile Include="BLL\CustomerBLL.cs" />
     <Compile Include="BLL\EmployeeBLL.cs" />
     <Compile Include="BLL\InvoiceBLL.cs" />
+    <Compile Include="BLL\LapDonHangBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="DAL\ComboDAL.cs" />
     <Compile Include="DAL\CustomerDAL.cs" />
     <Compile Include="DAL\DBConnection.cs" />
     <Compile Include="DAL\EmployeeDAL.cs" />
     <Compile Include="DAL\InvoiceDAL.cs" />
+    <Compile Include="DAL\LapDonHangDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DTO\Category.cs" />
     <Compile Include="DTO\Combo.cs" />
@@ -81,6 +88,12 @@
     </Compile>
     <Compile Include="GUI\DialogChangeStatus.Designer.cs">
       <DependentUpon>DialogChangeStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\LapDonHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\LapDonHang.Designer.cs">
+      <DependentUpon>LapDonHang.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\QuanlyHoadon.cs">
       <SubType>Form</SubType>
@@ -145,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DialogChangeStatus.resx">
       <DependentUpon>DialogChangeStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\LapDonHang.resx">
+      <DependentUpon>LapDonHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

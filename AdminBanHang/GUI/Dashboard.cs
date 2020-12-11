@@ -33,5 +33,11 @@ namespace AdminBanHang.GUI
             QuanlyHoadon quanlyHoadon = new QuanlyHoadon();
             quanlyHoadon.Show();
         }
+
+        private void lậpĐơnHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LapDonHang lapDonHang = new LapDonHang();
+            lapDonHang.Show();
+        }
     }
 }

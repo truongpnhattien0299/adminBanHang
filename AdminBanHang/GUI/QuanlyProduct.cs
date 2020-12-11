@@ -55,7 +55,7 @@ namespace AdminBanHang.GUI
                 imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
             }
         }
-        private void LoadListview()
+        public void LoadListview()
         {
             ProductBLL productBLL = new ProductBLL();
             DataTable dataTable;

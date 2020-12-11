@@ -110,7 +110,7 @@ namespace AdminBanHang.DAL
                 string image = product.image;
                 int amount = product.amount;
                 int price = product.price;
-                string detail = product.detail;
+                string detail = product.detail.Replace("'","\"");
                 int category_id = product.categoryid;
                 string sql = @"UPDATE Product SET Productname = N'" + productname
                                                   + "', Category_ID = " + category_id

@@ -34,6 +34,7 @@
             this.productToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hóaĐơnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lậpĐơnHàngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +54,8 @@
             this.nhaVienToolStripMenuItem,
             this.productToolStripMenuItem,
             this.comboToolStripMenuItem,
-            this.hóaĐơnToolStripMenuItem});
+            this.hóaĐơnToolStripMenuItem,
+            this.lậpĐơnHàngToolStripMenuItem});
             this.quảnLýToolStripMenuItem.Name = "quảnLýToolStripMenuItem";
             this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.quảnLýToolStripMenuItem.Text = "Quản lý";
@@ -86,6 +88,13 @@
             this.hóaĐơnToolStripMenuItem.Text = "Hóa đơn";
             this.hóaĐơnToolStripMenuItem.Click += new System.EventHandler(this.InvoiceToolStripMenuItem_Click);
             // 
+            // lậpĐơnHàngToolStripMenuItem
+            // 
+            this.lậpĐơnHàngToolStripMenuItem.Name = "lậpĐơnHàngToolStripMenuItem";
+            this.lậpĐơnHàngToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lậpĐơnHàngToolStripMenuItem.Text = "Lập đơn hàng";
+            this.lậpĐơnHàngToolStripMenuItem.Click += new System.EventHandler(this.lậpĐơnHàngToolStripMenuItem_Click);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,5 +120,6 @@
         private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comboToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hóaĐơnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lậpĐơnHàngToolStripMenuItem;
     }
 }

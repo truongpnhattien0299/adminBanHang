@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdminBanHang.DTO
 {
-    class Product
+    public class Product
     {
         public int id { get; set; }
         public string productname { get; set; }
