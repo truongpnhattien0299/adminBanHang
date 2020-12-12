@@ -11,17 +11,33 @@ namespace AdminBanHang.DAL
 {
     public class CustomerDAL
     {
-        private static SqlConnection conn = DBConnection.GetConnection();
         public static DataTable getAllCustomer()
         {
-            conn.Open();
-            string sql = "select * from Customer";
-            SqlCommand com = new SqlCommand(sql, conn);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
-            DataTable dt = new DataTable();
-            dataAdapter.Fill(dt);
-            conn.Close();
-            return dt;
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select * from Customer";
+                SqlCommand com = new SqlCommand(sql, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                conn.Close();
+                return dt;
+            }    
+        }
+        public static DataTable Search(string name, string phone)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select * from Customer where (FirstName like N'%" + name + "%' or LastName like N'%" + name + "%') and Phone like '%" + phone + "%'";
+                SqlCommand com = new SqlCommand(sql, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                conn.Close();
+                return dt;
+            }
         }
     }
 }

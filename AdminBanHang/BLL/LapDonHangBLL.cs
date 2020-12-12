@@ -16,6 +16,22 @@ namespace AdminBanHang.BLL
         public Product GetProduct(int id)
         {
             return DAL.LapDonHangDAL.GetProduct(id);
-        }    
+        }
+        public void AddKhach(string firstname, string lastname, string phone, string address)
+        {
+            DAL.LapDonHangDAL.AddKhach(firstname, lastname, phone, address);
+        }
+        public int getIdCustommer()
+        {
+            return DAL.LapDonHangDAL.getIdCustommer();
+        }
+        public void AddInvoice(Invoice invoice)
+        {
+            DAL.LapDonHangDAL.AddInvoice(invoice);
+        }
+        public void AddInvoiceDetail(string products, string combos)
+        {
+            DAL.LapDonHangDAL.AddInvoiceDetail(products, combos);
+        }
     }
 }

@@ -89,11 +89,23 @@
     <Compile Include="GUI\DialogChangeStatus.Designer.cs">
       <DependentUpon>DialogChangeStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\InfoCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\InfoCustomerForm.Designer.cs">
+      <DependentUpon>InfoCustomerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\LapDonHang.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\LapDonHang.Designer.cs">
       <DependentUpon>LapDonHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\OldCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\OldCustomer.Designer.cs">
+      <DependentUpon>OldCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\QuanlyHoadon.cs">
       <SubType>Form</SubType>
@@ -159,11 +171,17 @@
     <EmbeddedResource Include="GUI\DialogChangeStatus.resx">
       <DependentUpon>DialogChangeStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\InfoCustomerForm.resx">
+      <DependentUpon>InfoCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\LapDonHang.resx">
       <DependentUpon>LapDonHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\OldCustomer.resx">
+      <DependentUpon>OldCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\QuanlyCombo.resx">
       <DependentUpon>QuanlyCombo.cs</DependentUpon>

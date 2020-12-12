@@ -14,6 +14,9 @@ namespace AdminBanHang.BLL
         {
             return DAL.CustomerDAL.getAllCustomer();
         }
-
+        public DataTable Search(string name, string phone)
+        {
+            return DAL.CustomerDAL.Search(name,phone);
+        }
     }
 }

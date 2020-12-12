@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AdminBanHang.DAL
 {
@@ -16,6 +14,26 @@ namespace AdminBanHang.DAL
             string connection_string = @"Data Source="+ datasource +";Initial Catalog="+ database +";Integrated Security=True";
             SqlConnection conn = new SqlConnection(connection_string);
             return conn;
+        }
+        public static string  HashPassword(string pass)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int i=0; i< result.Length; i++)
+            {
+                stringBuilder.Append(result[i].ToString("x2"));
+            }
+            return stringBuilder.ToString();
+        }
+        public static string FormatDate(DateTime date)
+        {
+            int day = date.Day;
+            int month = date.Month;
+            int year = date.Year;
+            return month + "/" + day + "/" + year;
+
         }
     }
 }

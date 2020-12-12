@@ -84,8 +84,8 @@ namespace AdminBanHang.DAL
                 conn.Open();
                 string comboname = combo.comboName;
                 string image = combo.image;
-                string daystart = FormatDate(combo.dayStart);
-                string dayend = FormatDate(combo.dayEnd);
+                string daystart = DBConnection.FormatDate(combo.dayStart);
+                string dayend = DBConnection.FormatDate(combo.dayEnd);
                 int total = combo.total;
                 string discountmoney = combo.discountMoney;
                 string sql = @"UPDATE Combo SET ComboName = N'" + comboname
@@ -113,7 +113,7 @@ namespace AdminBanHang.DAL
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 conn.Open();
-                string sql = "select * from Combo where DayStart>='"+ FormatDate(start) +"' and DayEnd <='"+ FormatDate(end) +"' and ComboName like N'%"+ text +"%'";
+                string sql = "select * from Combo where DayStart>='"+DBConnection.FormatDate(start) +"' and DayEnd <='"+ DBConnection.FormatDate(end) +"' and ComboName like N'%"+ text +"%'";
                 SqlCommand command = new SqlCommand(sql, conn);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -122,14 +122,6 @@ namespace AdminBanHang.DAL
                 return dt;
             }
         }    
-        private static string FormatDate(DateTime date)
-        {
-            int day = date.Day;
-            int month = date.Month;
-            int year = date.Year;
-            return month + "/" + day + "/" + year;
-
-        }
         public static void EditComboProduct(ArrayList list, int id)
         {
             using (SqlConnection conn = DBConnection.GetConnection())

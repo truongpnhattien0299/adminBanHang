@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
 using AdminBanHang.DTO;
+using Newtonsoft.Json;
 
 namespace AdminBanHang.GUI
 {
@@ -20,8 +16,9 @@ namespace AdminBanHang.GUI
         private string folder_combo = @"E:\All1\";
         private bool check = false; // cờ để kiểm tra list view đang show product( false ) hay combo ( true )
         private bool flagfind = false; // cờ để kiểm tra xem combo muốn thêm đã có trng danh sách chưa
-        private int id;
-        private string key;
+        private bool clickSearch = false, newCus = false;
+        private int id, idcus;
+        private string key, firstname, lastname, phone, address;
         ArrayList arr_combo = new ArrayList();
         ArrayList arr_product = new ArrayList();
         public LapDonHang()
@@ -30,7 +27,10 @@ namespace AdminBanHang.GUI
             btnSanPham.Enabled = false;
             btnMove.Enabled = false;
             btnGiamSl.Enabled = false;
+            btnAdd.Enabled = false;
+            groupBoxCombo.Visible = false;
             LoadListViewProduct();
+            LoadComboType();
         }
         private void LoadImage(DataTable dataTable, string folder, int width, int height)
         {
@@ -40,21 +40,34 @@ namespace AdminBanHang.GUI
                 imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
             }
         }
+        private void LoadComboType()
+        {
+            ProductBLL productBLL = new ProductBLL();
+            comboBoxType.DataSource = productBLL.GetAllType();
+            comboBoxType.DisplayMember = "TypeName";
+        }
+        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProductBLL productBLL = new ProductBLL();
+            Types types = (Types)comboBoxType.SelectedItem;
+            comboBoxBrand.DataSource = productBLL.GetCategory(types.Id);
+            comboBoxBrand.DisplayMember = "CategoryName";
+        }
         private void LoadListViewProduct()
         {
             ProductBLL productBLL = new ProductBLL();
             DataTable dataTable;
-            //if (clickSearch)
-            //{
-            //    Types idtype = (Types)comboSearchType.SelectedItem;
-            //    Category idcate = (Category)comboSearchCategory.SelectedItem;
-            //    string text = txtSearch.Text;
-            //    dataTable = productBLL.Search(idtype.Id, idcate.Id, text);
-            //}
-            //else
-            //{
+            if (clickSearch)
+            {
+                Types idtype = (Types)comboBoxType.SelectedItem;
+                Category idcate = (Category)comboBoxBrand.SelectedItem;
+                string text = txtSearchProduct.Text;
+                dataTable = productBLL.Search(idtype.Id, idcate.Id, text);
+            }
+            else
+            {
                 dataTable = productBLL.GetAllProduct();
-            //}
+            }
             LoadImage(dataTable, folder_product, 70, 70);
             listViewData.Clear();
             listViewData.View = View.Details;
@@ -87,9 +100,9 @@ namespace AdminBanHang.GUI
         {
             ComboBLL comboBLL = new ComboBLL();
             DataTable dataTable;
-            //if (clickSearch)
-            //    dataTable = comboBLL.Search(dateSearchStart.Value, dateSearchEnd.Value, txtSearch.Text);
-            //else
+            if (clickSearch)
+                dataTable = comboBLL.Search(dateStart.Value, dateEnd.Value, txtSeachCombo.Text);
+            else
                 dataTable = comboBLL.GetAllCombo();
             LoadImage(dataTable, folder_combo, 120, 70);
             listViewData.Clear();
@@ -117,19 +130,21 @@ namespace AdminBanHang.GUI
                 listViewData.Items.Add(lvitem);
             }
         }
-
         private void btnSanPham_Click(object sender, EventArgs e)
         {
             LoadListViewProduct();
+            groupBoxProduct.Visible = true;
+            groupBoxCombo.Visible = false;
             btnSanPham.Enabled = false;
             btnCombo.Enabled = true;
             btnMove.Enabled = false;
             check = false;
         }
-
         private void btnCombo_Click(object sender, EventArgs e)
         {
             LoadListViewCombo();
+            groupBoxCombo.Visible = true;
+            groupBoxProduct.Visible = false;
             btnCombo.Enabled = false;
             btnSanPham.Enabled = true;
             btnMove.Enabled = false;
@@ -141,17 +156,17 @@ namespace AdminBanHang.GUI
             if (arr_product.Count != 0)
             {
                 string folder = @"E:\All\";
-                foreach (Obj row in arr_product)
+                foreach (ObjProduct row in arr_product)
                 {
-                    imageListSelect.Images.Add("product_"+row.objProduct.id.ToString(), new Bitmap(folder + row.objProduct.image));
+                    imageListSelect.Images.Add("product_"+row.Product.id.ToString(), new Bitmap(folder + row.Product.image));
                 }
             }
             if (arr_combo.Count != 0)
             {
                 string folder = @"E:\All1\";
-                foreach (Obj row in arr_combo)
+                foreach (ObjCombo row in arr_combo)
                 {
-                    imageListSelect.Images.Add("combo_"+row.objCombo.Id.ToString(), new Bitmap(folder + row.objCombo.image));
+                    imageListSelect.Images.Add("combo_"+row.Combo.Id.ToString(), new Bitmap(folder + row.Combo.image));
                 }
             }
         }
@@ -168,32 +183,32 @@ namespace AdminBanHang.GUI
             int thanhtien = 0;
             if(arr_product.Count != 0)
             {
-                foreach (Obj item in arr_product)
+                foreach (ObjProduct item in arr_product)
                 {
                     lvitem = new ListViewItem();
-                    int quantity = item.qty;
-                    int tongcong = quantity * item.objProduct.price;
+                    int quantity = item.Quantity;
+                    int tongcong = quantity * item.Product.price;
                     thanhtien += tongcong;
-                    lvitem.ImageKey = "product_"+item.objProduct.id.ToString();
-                    lvitem.SubItems.Add(item.objProduct.productname);
+                    lvitem.ImageKey = "product_"+item.Product.id.ToString();
+                    lvitem.SubItems.Add(item.Product.productname);
                     lvitem.SubItems.Add(quantity.ToString());
-                    lvitem.SubItems.Add(item.objProduct.price.ToString("0,0"));
+                    lvitem.SubItems.Add(item.Product.price.ToString("0,0"));
                     lvitem.SubItems.Add(tongcong.ToString("0,0"));
                     listViewSelect.Items.Add(lvitem);
                 }
             }
             if (arr_combo.Count != 0)
             {
-                foreach (Obj item in arr_combo)
+                foreach (ObjCombo item in arr_combo)
                 {
                     lvitem = new ListViewItem();
-                    int quantity = item.qty;
-                    int tongcong = quantity * item.objCombo.total;
+                    int quantity = item.Quantity;
+                    int tongcong = quantity * item.Combo.total;
                     thanhtien += tongcong;
-                    lvitem.ImageKey = "combo_"+item.objCombo.Id.ToString();
-                    lvitem.SubItems.Add(item.objCombo.comboName);
+                    lvitem.ImageKey = "combo_"+item.Combo.Id.ToString();
+                    lvitem.SubItems.Add(item.Combo.comboName);
                     lvitem.SubItems.Add(quantity.ToString());
-                    lvitem.SubItems.Add(item.objCombo.total.ToString("0,0"));
+                    lvitem.SubItems.Add(item.Combo.total.ToString("0,0"));
                     lvitem.SubItems.Add(tongcong.ToString("0,0"));
                     listViewSelect.Items.Add(lvitem);
                 }
@@ -213,84 +228,101 @@ namespace AdminBanHang.GUI
             listViewSelect.Columns.Add("Đơn giá", 70);
             listViewSelect.Columns.Add("Tổng cộng", 70);
         }
-
         private void btnMove_Click(object sender, EventArgs e)
         {
             LapDonHangBLL lapDonHangBLL = new LapDonHangBLL();
             if (check) // là combo
             {
-                Obj obj = new Obj();
-                obj.objCombo = lapDonHangBLL.GetCombo(id);
+                ObjCombo obj = new ObjCombo();
+                obj.Combo = lapDonHangBLL.GetCombo(id);
                 if(arr_combo.Count != 0)
                 {
-                    foreach(Obj a in arr_combo)
+                    foreach(ObjCombo a in arr_combo)
                     {
-                        if (a.objCombo.Id == id)
+                        if (a.Combo.Id == id)
                         {
-                            a.qty++;
+                            a.Quantity++;
                             flagfind = true;
                         }    
                     }
                     if(flagfind == false)
                     {
-                        obj.qty = 1;
+                        obj.Quantity = 1;
                         arr_combo.Add(obj);
                     }
                     flagfind = false;
                 }
                 else
                 {
-                    obj.qty = 1;
+                    obj.Quantity = 1;
                     arr_combo.Add(obj);
                 }    
             }
             else
             {
-                Obj obj = new Obj();
-                obj.objProduct = lapDonHangBLL.GetProduct(id); ;
+                ObjProduct obj = new ObjProduct();
+                obj.Product = lapDonHangBLL.GetProduct(id); ;
                 if (arr_product.Count != 0)
                 {
-                    foreach (Obj a in arr_product)
+                    foreach (ObjProduct a in arr_product)
                     {
-                        if (a.objProduct.id == id)
+                        if (a.Product.id == id)
                         {
-                            a.qty++;
+                            a.Quantity++;
                             flagfind = true;
                         }
                     }
                     if (flagfind == false)
                     {
-                        obj.qty = 1;
+                        obj.Quantity = 1;
                         arr_product.Add(obj);
                     }
                     flagfind = false;
                 }
                 else
                 {
-                    obj.qty = 1;
+                    obj.Quantity = 1;
                     arr_product.Add(obj);
                 }
             }
             LoadListViewSelect();
         }
-
         private void listView_select_click(object sender, EventArgs e)
         {
-           key = listViewSelect.SelectedItems[0].ImageKey;
+            key = listViewSelect.SelectedItems[0].ImageKey;
             btnGiamSl.Enabled = true;
         }
-
+        private void btnResetCombo_Click(object sender, EventArgs e)
+        {
+            LoadListViewCombo();
+        }
+        private void btnResetProduct_Click(object sender, EventArgs e)
+        {
+            LoadListViewProduct();
+        }
+        private void btnSearchCombo_Click(object sender, EventArgs e)
+        {
+            clickSearch = true;
+            LoadListViewCombo();
+            clickSearch = false;
+        }
+        private void btnSearchProduct_Click(object sender, EventArgs e)
+        {
+            clickSearch = true;
+            LoadListViewProduct();
+            clickSearch = false;
+        }
         private void btnGiamSl_Click(object sender, EventArgs e)
         {
             string[] s = key.Split('_');
             if(s[0].Equals("product"))
             {
-                foreach(Obj item in arr_product)
+                foreach(ObjProduct item in arr_product)
                 {
-                    if(item.objProduct.id == int.Parse(s[1]))
+                    if(item.Product.id == int.Parse(s[1]))
                     {
-                        item.qty--;
-                        if (item.qty == 0)
+                        item.Quantity--;
+                        if (item.Quantity == 0)
                         {
                             arr_product.Remove(item);
                             break;
@@ -300,12 +332,12 @@ namespace AdminBanHang.GUI
             }   
             else
             {
-                foreach (Obj item in arr_combo)
+                foreach (ObjCombo item in arr_combo)
                 {
-                    if (item.objCombo.Id == int.Parse(s[1]))
+                    if (item.Combo.Id == int.Parse(s[1]))
                     {
-                        item.qty--;
-                        if (item.qty == 0)
+                        item.Quantity--;
+                        if (item.Quantity == 0)
                         {
                             arr_combo.Remove(item);
                             break;
@@ -315,13 +347,78 @@ namespace AdminBanHang.GUI
             }
             LoadListViewSelect();
         }
-
-        // == Khai báo 1 class để mã hóa JSON 
-        public class Obj
+        private void btnKhach_Click(object sender, EventArgs e)
         {
-            public Product objProduct { get; set; }
-            public Combo objCombo { get; set; }
-            public int qty { get; set; }
+            using (OldCustomer old = new OldCustomer())
+            {
+                DialogResult rs = old.ShowDialog();
+                if(rs == DialogResult.Cancel)
+                {
+                    firstname = old.firstname;
+                    lastname = old.lastname;
+                    phone = old.phone;
+                    address = old.address;
+                    newCus = true;
+                }    
+                if(rs == DialogResult.OK)
+                {
+                    idcus = old.id;
+                    address = old.address;
+                    phone = old.phone;
+                    newCus = false;
+                }
+                btnAdd.Enabled = true;
+            }    
+        }
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            LapDonHangBLL donHangBLL = new LapDonHangBLL();
+            if(newCus)
+                donHangBLL.AddKhach(firstname, lastname, phone, address);
+            int totalqty = 0;
+            foreach(ObjCombo item in arr_combo)
+            {
+                totalqty += item.Quantity;
+            }    
+            foreach(ObjProduct item in arr_product)
+            {
+                totalqty += item.Quantity;
+            }
+            Invoice invoice = new Invoice();
+            if(newCus)
+                invoice.customer_id = donHangBLL.getIdCustommer();
+            else
+                invoice.customer_id = idcus;
+            invoice.customeraddress = address;
+            invoice.totalmoney = txtThanhtien.Text.Replace(",","");
+            invoice.amount = totalqty.ToString();
+            invoice.creatday = DateTime.Now;
+            invoice.ordernote = "123";
+            invoice.postcode = "123";
+            invoice.status = "Done";
+            donHangBLL.AddInvoice(invoice);
+            string products = "";
+            if(arr_product.Count!=0)
+                products = JsonConvert.SerializeObject(arr_product);
+            string combos = "";
+            if(arr_combo.Count != 0)
+                combos = JsonConvert.SerializeObject(arr_combo);
+            donHangBLL.AddInvoiceDetail(products, combos);
+            LoadListViewSelect();
+            arr_combo = new ArrayList();
+            arr_product = new ArrayList();
+            MessageBox.Show("Đã thêm đơn hàng thành công");
+        }
+        // == Khai báo 1 class để mã hóa JSON 
+        public class ObjProduct
+        {
+            public Product Product { get; set; }
+            public int Quantity { get; set; }
+        }
+        public class ObjCombo
+        {
+            public Combo Combo { get; set; }
+            public int Quantity { get; set; }
         }
     }
 }
