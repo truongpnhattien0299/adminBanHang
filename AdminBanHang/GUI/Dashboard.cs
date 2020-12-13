@@ -24,7 +24,8 @@ namespace AdminBanHang.GUI
 
         private void btnQLKH_Click(object sender, EventArgs e)
         {
-
+            QuanLyKhachhang quanLyKhachhang = new QuanLyKhachhang();
+            quanLyKhachhang.Show();
         }
 
         private void btnQLNV_Click(object sender, EventArgs e)

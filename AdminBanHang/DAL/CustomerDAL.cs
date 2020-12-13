@@ -39,5 +39,24 @@ namespace AdminBanHang.DAL
                 return dt;
             }
         }
+        public static void ChangeStatus(int id)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "select status from Customer where Id = "+id;
+                SqlCommand command = new SqlCommand(sql, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                if(dt.Rows[0][0].ToString().Equals("Active"))
+                    sql = "Update Customer set status = 'Block' where Id="+id;
+                else
+                    sql = "Update Customer set status = 'Active' where Id="+id;
+                command = new SqlCommand(sql, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
     }
 }

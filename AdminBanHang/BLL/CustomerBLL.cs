@@ -8,7 +8,7 @@ using AdminBanHang.DTO;
 
 namespace AdminBanHang.BLL
 {
-    class CustomerBLL
+    public class CustomerBLL
     {
         public DataTable getAllCustomer()
         {
@@ -17,6 +17,10 @@ namespace AdminBanHang.BLL
         public DataTable Search(string name, string phone)
         {
             return DAL.CustomerDAL.Search(name,phone);
+        }
+        public void ChangeStatus(int id)
+        {
+            DAL.CustomerDAL.ChangeStatus(id);
         }
     }
 }
