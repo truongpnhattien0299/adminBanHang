@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
+using AdminBanHang.DAL;
 using AdminBanHang.DTO;
 
 namespace AdminBanHang.GUI
@@ -11,8 +12,7 @@ namespace AdminBanHang.GUI
     public partial class QuanlyProduct : Form
     {
         private ImageList imageList;
-        private string folder = @"E:\All\";
-        private string path = "", fullpath = "", destpath = @"E:\All\";
+        private string path = "", fullpath = "";
         private bool flag = false, clickSearch = false;
         private int id = -1;
         public QuanlyProduct()
@@ -52,7 +52,7 @@ namespace AdminBanHang.GUI
             imageList = new ImageList() { ImageSize = new Size(70, 70) };
             foreach (DataRow row in dataTable.Rows)
             {
-                imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
+                imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(DBConnection.folder_product + row.Field<string>("Image")));
             }
         }
         public void LoadListview()
@@ -114,7 +114,7 @@ namespace AdminBanHang.GUI
         {
             ProductBLL productBLL = new ProductBLL();
             path = productBLL.pathImage(id);
-            previewImage.Image = Image.FromFile(folder+path);
+            previewImage.Image = Image.FromFile(DBConnection.folder_product + path);
             previewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             lblNameImage.Text = path;
         }
@@ -164,7 +164,7 @@ namespace AdminBanHang.GUI
             product.image = path;
             try
             {
-                File.Copy(fullpath, destpath + path);
+                File.Copy(fullpath, DBConnection.folder_product + path);
             }
             catch (Exception ex)
             {
@@ -190,7 +190,7 @@ namespace AdminBanHang.GUI
 
             /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
             product.image = path;
-            if(flag) File.Copy(fullpath, destpath + path);
+            if(flag) File.Copy(fullpath, DBConnection.folder_product + path);
 
             productBLL.EditProduct(product, id);
             LoadListview();

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
+using AdminBanHang.DAL;
 using AdminBanHang.DTO;
 
 namespace AdminBanHang.GUI
@@ -12,8 +13,7 @@ namespace AdminBanHang.GUI
     public partial class QuanlyCombo : Form
     {
         private ImageList imageList;
-        private string folder = @"E:\All1\";
-        private string path = "", fullpath = "", destpath = @"E:\All1\";
+        private string path = "", fullpath = "";
         private bool flag = false, clickSearch = false, flagimage = false;
         private int id = -1;
         private ArrayList list;
@@ -28,15 +28,12 @@ namespace AdminBanHang.GUI
         } 
         private void LoadImage(DataTable dataTable)
         {
-            ProductBLL productBLL = new ProductBLL();
             imageList = new ImageList() { ImageSize = new Size(120, 70) };
             foreach (DataRow row in dataTable.Rows)
             {
-                imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(folder + row.Field<string>("Image")));
+                imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(DBConnection.folder_combo + row.Field<string>("Image")));
             }
         }
-
-
         public void LoadListView()
         {
             ComboBLL comboBLL = new ComboBLL();
@@ -107,15 +104,15 @@ namespace AdminBanHang.GUI
             try
             {
                 if (flagimage)
-                    fullpath = folder + path;
+                    fullpath = DBConnection.folder_combo + path;
                 int i = 1;
-                while(File.Exists(destpath + path))
+                while(File.Exists(DBConnection.folder_combo + path))
                 {
                     string[] temp = path.Split('.');
                     path = temp[0] + "-" + i + "." + temp[1];
                     i++;
                 }
-                File.Copy(fullpath, destpath + path);
+                File.Copy(fullpath, DBConnection.folder_combo + path);
                 flagimage = false;
 
                 combo.comboName = txtComboName.Text;
@@ -243,16 +240,9 @@ namespace AdminBanHang.GUI
         {
             ComboBLL comboBLL = new ComboBLL();
             path = comboBLL.pathImage(id);
-            previewImage.Image = Image.FromFile(folder + path);
+            previewImage.Image = Image.FromFile(DBConnection.folder_combo + path);
             previewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             lblNameImage.Text = path;
-        }
-        private void listView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show("double click");
-            int idcombo = int.Parse(listViewCombo.SelectedItems[0].ImageKey);
-            ComboProductForm comboProduct = new ComboProductForm(idcombo);
-            comboProduct.Show();
         }
     }
 }

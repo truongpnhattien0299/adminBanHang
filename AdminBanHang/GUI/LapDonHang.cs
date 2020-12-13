@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
+using AdminBanHang.DAL;
 using AdminBanHang.DTO;
 using Newtonsoft.Json;
 
@@ -12,8 +13,8 @@ namespace AdminBanHang.GUI
     public partial class LapDonHang : Form
     {
         private ImageList imageList, imageListSelect;
-        private string folder_product = @"E:\All\";
-        private string folder_combo = @"E:\All1\";
+        private string folder_product = DBConnection.folder_product;
+        private string folder_combo = DBConnection.folder_combo;
         private bool check = false; // cờ để kiểm tra list view đang show product( false ) hay combo ( true )
         private bool flagfind = false; // cờ để kiểm tra xem combo muốn thêm đã có trng danh sách chưa
         private bool clickSearch = false, newCus = false;

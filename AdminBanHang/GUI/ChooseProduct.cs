@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
+using AdminBanHang.DAL;
 using AdminBanHang.DTO;
 
 namespace AdminBanHang.GUI
@@ -12,7 +13,7 @@ namespace AdminBanHang.GUI
     {
         private ImageList imageList;
         private bool clickSearch = false;
-        private string folder = @"E:\All\";
+        private string folder = DBConnection.folder_product;
         public ArrayList listProduct { get; set; }
         public int total { get; set; }
         public ChooseProduct()

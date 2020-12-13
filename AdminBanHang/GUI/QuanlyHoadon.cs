@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
+using AdminBanHang.DAL;
 using AdminBanHang.DTO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -97,18 +98,16 @@ namespace AdminBanHang.GUI
             imageList = new ImageList() { ImageSize = new Size(70, 70) };
             if (arr_product != null)
             {
-                string folder = @"E:\All\";
                 foreach (Product row in arr_product)
                 {
-                    imageList.Images.Add(row.id.ToString(), new Bitmap(folder + row.image));
+                    imageList.Images.Add(row.id.ToString(), new Bitmap(DBConnection.folder_product + row.image));
                 }
             }
             if (arr_combo != null)
             {
-                string folder = @"E:\All1\";
                 foreach (Combo row in arr_combo)
                 {
-                    imageList.Images.Add(row.Id.ToString(), new Bitmap(folder + row.image));
+                    imageList.Images.Add(row.Id.ToString(), new Bitmap(DBConnection.folder_combo + row.image));
                 }
             }
         }

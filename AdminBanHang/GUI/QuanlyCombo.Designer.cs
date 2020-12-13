@@ -73,7 +73,6 @@
             this.listViewCombo.TabIndex = 0;
             this.listViewCombo.UseCompatibleStateImageBehavior = false;
             this.listViewCombo.Click += new System.EventHandler(this.listView_Click);
-            this.listViewCombo.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
             // 
             // btnThem
             // 
