@@ -10,34 +10,50 @@ namespace AdminBanHang.GUI
             InitializeComponent();
         }
 
-        private void nhaVienToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            QuanLyNhanvien quanLyNhanvien = new QuanLyNhanvien();
-            quanLyNhanvien.Show();
-        }
-
-        private void productToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnQLSP_Click(object sender, EventArgs e)
         {
             QuanlyProduct quanlyProduct = new QuanlyProduct();
             quanlyProduct.Show();
         }
 
-        private void comboToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnQLCB_Click(object sender, EventArgs e)
         {
             QuanlyCombo quanlyCombo = new QuanlyCombo();
             quanlyCombo.Show();
         }
 
-        private void InvoiceToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnQLKH_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnQLNV_Click(object sender, EventArgs e)
+        {
+            QuanLyNhanvien quanLyNhanvien = new QuanLyNhanvien();
+            quanLyNhanvien.Show();
+        }
+
+        private void btnQLHĐ_Click(object sender, EventArgs e)
         {
             QuanlyHoadon quanlyHoadon = new QuanlyHoadon();
             quanlyHoadon.Show();
         }
 
-        private void lậpĐơnHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnNewDH_Click(object sender, EventArgs e)
         {
             LapDonHang lapDonHang = new LapDonHang();
             lapDonHang.Show();
+        }
+
+        private void btnThongKe_Click(object sender, EventArgs e)
+        {
+            ThongKeForm thongKeForm = new ThongKeForm();
+            thongKeForm.Show();
+        }
+
+        private void Close(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -124,6 +124,26 @@ namespace AdminBanHang.DAL
                 conn.Close();
             }    
         }
+        public static void EditProduct(int amount, int id)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "";
+                sql = "select amount from Product where Id = " + id;
+                SqlCommand command = new SqlCommand(sql, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                int sl = int.Parse(dt.Rows[0][0].ToString()) - amount;
+                sql = @"UPDATE Product SET Amount = " + sl
+                            + " WHERE Id =" + id;
+                command = new SqlCommand(sql, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
         public static void DeleteProduct(int id)
         {
             using (SqlConnection conn = DBConnection.GetConnection())

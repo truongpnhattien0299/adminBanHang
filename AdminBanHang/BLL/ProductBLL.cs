@@ -34,6 +34,10 @@ namespace AdminBanHang.BLL
         {
             DAL.ProductDAL.EditProduct(product, id);
         }
+        public void EditProduct(int amount, int id)
+        {
+            DAL.ProductDAL.EditProduct(amount, id);
+        }    
         public void DeleteProduct(int id)
         {
             DAL.ProductDAL.DeleteProduct(id);

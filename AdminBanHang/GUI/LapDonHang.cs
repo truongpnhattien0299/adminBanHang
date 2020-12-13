@@ -379,10 +379,20 @@ namespace AdminBanHang.GUI
             foreach(ObjCombo item in arr_combo)
             {
                 totalqty += item.Quantity;
+                ComboBLL comboBLL = new ComboBLL();
+                ArrayList listid = comboBLL.ListIDProduct(item.Combo.Id);
+                foreach(int a in listid)
+                {
+                    ProductBLL productBLL = new ProductBLL();
+                    productBLL.EditProduct(item.Quantity, a);
+                }    
+
             }    
             foreach(ObjProduct item in arr_product)
             {
                 totalqty += item.Quantity;
+                ProductBLL productBLL = new ProductBLL();
+                productBLL.EditProduct(item.Quantity, item.Product.id);
             }
             Invoice invoice = new Invoice();
             if(newCus)
