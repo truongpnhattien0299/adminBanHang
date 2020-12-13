@@ -15,7 +15,7 @@ namespace AdminBanHang.DAL
         public static Boolean Login(string username, string password)
         {
             conn.Open();
-            string sql = "select count(*) from Emplopyee where Username='"+ username +"' and Password='"+ password+"'";
+            string sql = "select count(*) from Emplopyee where Username='"+ username +"' and Password='"+ DBConnection.HashPassword(password)+"'";
             SqlCommand com = new SqlCommand(sql, conn);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
             DataTable dt = new DataTable();

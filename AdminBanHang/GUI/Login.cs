@@ -12,17 +12,23 @@ namespace AdminBanHang.GUI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //string username = txtUsername.Text;
-            //string password = txtPassword.Text;
-            string username = "admin";
-            string password = "admin";
-            EmployeeBLL employeeBLL = new EmployeeBLL();
-            if(employeeBLL.Login(username, password))
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
+            if (!username.Equals("") && !password.Equals(""))
             {
-                this.Hide();
-                Dashboard dashboard = new Dashboard();
-                dashboard.Show();
-            }    
+                EmployeeBLL employeeBLL = new EmployeeBLL();
+                if (employeeBLL.Login(username, password))
+                {
+                    Hide();
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.Show();
+                }
+                else
+                    MessageBox.Show("Username hoặc Password không đúng", "Đăng nhập không thành công", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Username hoặc Password rỗng", "Error login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+             
         }
     }
 }
