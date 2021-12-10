@@ -31,6 +31,7 @@ namespace AdminBanHang.GUI
             imageList = new ImageList() { ImageSize = new Size(120, 70) };
             foreach (DataRow row in dataTable.Rows)
             {
+                Console.WriteLine("Giảm giá");
                 imageList.Images.Add(row.Field<int>("Id").ToString(), new Bitmap(DBConnection.folder_combo + row.Field<string>("Image")));
             }
         }
@@ -103,16 +104,8 @@ namespace AdminBanHang.GUI
             Combo combo = new Combo();
             try
             {
-                if (flagimage)
-                    fullpath = DBConnection.folder_combo + path;
-                int i = 1;
-                while(File.Exists(DBConnection.folder_combo + path))
-                {
-                    string[] temp = path.Split('.');
-                    path = temp[0] + "-" + i + "." + temp[1];
-                    i++;
-                }
-                File.Copy(fullpath, DBConnection.folder_combo + path);
+                if (flagimage && !File.Exists(DBConnection.folder_combo + path))
+                    File.Copy(fullpath, DBConnection.folder_combo + path);
                 flagimage = false;
 
                 combo.comboName = txtComboName.Text;
@@ -130,6 +123,7 @@ namespace AdminBanHang.GUI
                     comboProduct.product_id = int.Parse(listidprouct.ToString());
                     comboBLL.AddComboProduct(comboProduct);
                 }
+                MessageBox.Show("Thêm Combo thành công", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadListView();
             }
             catch (Exception ex)
@@ -179,7 +173,16 @@ namespace AdminBanHang.GUI
         {
             ComboBLL comboBLL = new ComboBLL();
             string pathTemp = comboBLL.pathImage(id);
-            comboBLL.DeleteCombo(id);
+            try
+            {
+                comboBLL.DeleteCombo(id);
+                MessageBox.Show("Xóa combo thành công", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Lỗi khi xóa Combo", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             txtComboName.Clear();
             txtTotal.Clear();
             numDiscount.Value = 0;
@@ -211,8 +214,20 @@ namespace AdminBanHang.GUI
             /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
             combo.image = path;
 
-            comboBLL.EditCombo(combo, id);
-            comboBLL.EditComboProduct(list, id);
+            try
+            {
+                if (flagimage && !File.Exists(DBConnection.folder_combo + path))
+                    File.Copy(fullpath, DBConnection.folder_combo + path);
+                flagimage = false;
+                comboBLL.EditCombo(combo, id);
+                comboBLL.EditComboProduct(list, id);
+                MessageBox.Show("Sửa combo thành công", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Lỗi khi sửa Combo", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             LoadListView();
         }
         

@@ -69,7 +69,7 @@ namespace AdminBanHang.GUI
                 string cusname = row.Field<string>("FirstName") +" "+ row.Field<string>("LastName");
                 lvitem.SubItems.Add(cusname);
                 lvitem.SubItems.Add(row.Field<string>("amount"));
-                lvitem.SubItems.Add(row.Field<string>("TotalMoney"));
+                lvitem.SubItems.Add(int.Parse(row.Field<string>("TotalMoney")).ToString("0,0"));
                 lvitem.SubItems.Add(row.Field<DateTime>("CreateDay").ToString());
                 lvitem.SubItems.Add(row.Field<string>("Postcode"));
                 lvitem.SubItems.Add(row.Field<string>("status"));
@@ -157,8 +157,8 @@ namespace AdminBanHang.GUI
                     lvitem.ImageKey = product.id.ToString();
                     lvitem.SubItems.Add(product.productname);
                     lvitem.SubItems.Add(quantity.ToString());
-                    lvitem.SubItems.Add(product.price.ToString());
-                    lvitem.SubItems.Add(tongcong.ToString());
+                    lvitem.SubItems.Add(product.price.ToString("0,0"));
+                    lvitem.SubItems.Add(tongcong.ToString("0,0"));
                     listViewInvoiceDetail.Items.Add(lvitem);
                 }
             }
@@ -175,8 +175,8 @@ namespace AdminBanHang.GUI
                     lvitem.ImageKey = combo.Id.ToString();
                     lvitem.SubItems.Add(combo.comboName);
                     lvitem.SubItems.Add(quantity.ToString());
-                    lvitem.SubItems.Add(combo.total.ToString());
-                    lvitem.SubItems.Add(tongcong.ToString());
+                    lvitem.SubItems.Add(combo.total.ToString("0,0"));
+                    lvitem.SubItems.Add(tongcong.ToString("0,0"));
                     listViewInvoiceDetail.Items.Add(lvitem);
                 }
             }

@@ -90,7 +90,7 @@ namespace AdminBanHang.DAL
                 string image = product.image;
                 int amount = product.amount;
                 int price = product.price;
-                string detail = product.detail;
+                string detail = product.detail.Replace("'","inch");
                 int category_id = product.categoryid;
 
                 string sql = @"INSERT INTO Product VALUES" +
@@ -110,7 +110,7 @@ namespace AdminBanHang.DAL
                 string image = product.image;
                 int amount = product.amount;
                 int price = product.price;
-                string detail = product.detail.Replace("'","\"");
+                string detail = product.detail.Replace("'", "inch");
                 int category_id = product.categoryid;
                 string sql = @"UPDATE Product SET Productname = N'" + productname
                                                   + "', Category_ID = " + category_id

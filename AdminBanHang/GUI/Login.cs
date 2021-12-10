@@ -24,7 +24,7 @@ namespace AdminBanHang.GUI
                     dashboard.Show();
                 }
                 else
-                    MessageBox.Show("Username hoặc Password không đúng", "Đăng nhập không thành công", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Username hoặc Password không đúng \n Hoặc tài khoản của bạn đã bị khóa", "Đăng nhập không thành công", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
                 MessageBox.Show("Username hoặc Password rỗng", "Error login", MessageBoxButtons.OK, MessageBoxIcon.Error);

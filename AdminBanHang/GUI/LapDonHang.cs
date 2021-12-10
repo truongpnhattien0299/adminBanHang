@@ -360,6 +360,8 @@ namespace AdminBanHang.GUI
                     phone = old.phone;
                     address = old.address;
                     newCus = true;
+                    if(firstname !=null && lastname!=null && phone!=null && address!=null)
+                        btnAdd.Enabled = true;
                 }    
                 if(rs == DialogResult.OK)
                 {
@@ -367,8 +369,8 @@ namespace AdminBanHang.GUI
                     address = old.address;
                     phone = old.phone;
                     newCus = false;
+                    btnAdd.Enabled = true;
                 }
-                btnAdd.Enabled = true;
             }    
         }
         private void btnAdd_Click(object sender, EventArgs e)
@@ -408,16 +410,17 @@ namespace AdminBanHang.GUI
             invoice.postcode = "123";
             invoice.status = "Done";
             donHangBLL.AddInvoice(invoice);
-            string products = "";
+            string products = "[]";
             if(arr_product.Count!=0)
                 products = JsonConvert.SerializeObject(arr_product);
-            string combos = "";
+            string combos = "[]";
             if(arr_combo.Count != 0)
                 combos = JsonConvert.SerializeObject(arr_combo);
             donHangBLL.AddInvoiceDetail(products, combos);
-            LoadListViewSelect();
             arr_combo = new ArrayList();
             arr_product = new ArrayList();
+            LoadListViewSelect();
+            btnAdd.Enabled = false;
             MessageBox.Show("Đã thêm đơn hàng thành công");
         }
         // == Khai báo 1 class để mã hóa JSON 

@@ -9,8 +9,8 @@ namespace AdminBanHang.DAL
     {
         private static string datasource = @"DESKTOP-8MU02PV\SQLEXPRESS";
         private static string database = "BanHang";
-        public static string folder_product = @"E:\All\";
-        public static string folder_combo = @"E:\All1\";
+        public static string folder_product = @"C:\Users\uraha\Desktop\New folder (2)\webbanhang\WebShop\wwwroot\images\product\large-size\All\";
+        public static string folder_combo = @"C:\Users\uraha\Desktop\New folder (2)\webbanhang\WebShop\wwwroot\images\product\large-size\Combo\";
         public static SqlConnection GetConnection()
         {
             string connection_string = @"Data Source="+ datasource +";Initial Catalog="+ database +";Integrated Security=True";

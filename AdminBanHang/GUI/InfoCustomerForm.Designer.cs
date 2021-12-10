@@ -45,6 +45,7 @@
             this.txtLastname.Name = "txtLastname";
             this.txtLastname.Size = new System.Drawing.Size(144, 20);
             this.txtLastname.TabIndex = 0;
+            this.txtLastname.TextChanged += new System.EventHandler(this.txtHochanged);
             // 
             // txtFirstName
             // 
@@ -52,6 +53,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(144, 20);
             this.txtFirstName.TabIndex = 3;
+            this.txtFirstName.TextChanged += new System.EventHandler(this.txtTenchanged);
             // 
             // txtPhone
             // 
@@ -59,6 +61,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(144, 20);
             this.txtPhone.TabIndex = 2;
+            this.txtPhone.TextChanged += new System.EventHandler(this.txtPhoneChanged);
             // 
             // label1
             // 
@@ -103,6 +106,7 @@
             this.txtAddress.Size = new System.Drawing.Size(144, 96);
             this.txtAddress.TabIndex = 1;
             this.txtAddress.Text = "";
+            this.txtAddress.TextChanged += new System.EventHandler(this.txtAddresschanged);
             // 
             // btnSave
             // 

@@ -19,6 +19,7 @@ namespace AdminBanHang.GUI
         public InfoCustomerForm()
         {
             InitializeComponent();
+            btnSave.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -27,6 +28,34 @@ namespace AdminBanHang.GUI
             lastname = txtLastname.Text;
             phone = txtPhone.Text;
             address = txtAddress.Text;
+        }
+
+        private void txtHochanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = false;
+            if (txtFirstName.Text != "" && txtLastname.Text != "" && txtPhone.Text != "" && txtAddress.Text != "")
+                btnSave.Enabled = true;
+        }
+
+        private void txtTenchanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = false;
+            if (txtFirstName.Text != "" && txtLastname.Text != "" && txtPhone.Text != "" && txtAddress.Text != "")
+                btnSave.Enabled = true;
+        }
+
+        private void txtPhoneChanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = false;
+            if (txtFirstName.Text != "" && txtLastname.Text != "" && txtPhone.Text != "" && txtAddress.Text != "")
+                btnSave.Enabled = true;
+        }
+
+        private void txtAddresschanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = false;
+            if (txtFirstName.Text != "" && txtLastname.Text != "" && txtPhone.Text != "" && txtAddress.Text != "")
+                btnSave.Enabled = true;
         }
     }
 }

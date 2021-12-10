@@ -164,14 +164,22 @@ namespace AdminBanHang.GUI
             product.image = path;
             try
             {
+                int i = 1;
+                while (File.Exists(DBConnection.folder_product + path))
+                {
+                    string[] temp = path.Split('.');
+                    path = temp[0] + "-" + i + "." + temp[1];
+                    i++;
+                }
                 File.Copy(fullpath, DBConnection.folder_product + path);
+
+                productBLL.AddProduct(product);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-            productBLL.AddProduct(product);
             LoadListview();
         }
 
@@ -190,9 +198,18 @@ namespace AdminBanHang.GUI
 
             /*Lấy Tên Ảnh đưa vào cơ sở dữ liệu*/
             product.image = path;
-            if(flag) File.Copy(fullpath, DBConnection.folder_product + path);
+            try
+            {
+                if (flag && !File.Exists(DBConnection.folder_product + path))
+                {
+                    File.Copy(fullpath, DBConnection.folder_product + path);
+                }
+                productBLL.EditProduct(product, id);
+            }
+            catch (Exception)
+            {
 
-            productBLL.EditProduct(product, id);
+            }
             LoadListview();
             flag = false;
         }

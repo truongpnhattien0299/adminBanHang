@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AdminBanHang.BLL;
 using AdminBanHang.DTO;
@@ -14,6 +7,7 @@ namespace AdminBanHang.GUI
 {
     public partial class QuanLyNhanvien : Form
     {
+        private string username;
         public QuanLyNhanvien()
         {
             InitializeComponent();
@@ -27,7 +21,14 @@ namespace AdminBanHang.GUI
         private void Load_on()
         {
             EmployeeBLL employeeBLL = new EmployeeBLL();
-            GridViewNhanvien.DataSource = employeeBLL.getAllEmployee();
+            try
+            {
+                GridViewNhanvien.DataSource = employeeBLL.getAllEmployee();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Lỗi Database", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -51,31 +52,35 @@ namespace AdminBanHang.GUI
             employee.role = 1;
             if (radioManager.Checked)
                 employee.role = 2;
-            employeeBLL.addEmployee(employee);
+            try
+            {
+                employeeBLL.addEmployee(employee);
+                MessageBox.Show("Đã thêm nhân viên thành công!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Thêm nhân viên KHÔNG thành công!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             Load_on();
         }
-
         private void ClickRow(object sender, DataGridViewCellEventArgs e)
         {
-            int count = this.GridViewNhanvien.Rows.Count;
-            if(e.RowIndex > -1 && e.RowIndex < count-1)
-            {
-                DataGridViewRow row = this.GridViewNhanvien.Rows[e.RowIndex];
-                txtUsername.Text = row.Cells[1].Value.ToString();
-                txtFirstname.Text = row.Cells[3].Value.ToString();
-                txtLastname.Text = row.Cells[4].Value.ToString();
-                string gender = row.Cells[5].Value.ToString();
-                radioMale.Checked = true;
-                if (gender.Equals("Female"))
-                    radioFemale.Checked = true;
-                dob.Value = (DateTime)row.Cells[6].Value;
-                txtAddress.Text = row.Cells[7].Value.ToString();
-                joindate.Value = (DateTime)row.Cells[8].Value;
-                string role = row.Cells[9].Value.ToString();
-                radioManager.Checked = true;
-                if (role.Equals("1"))
-                    radioAdmin.Checked = true;
-            }    
+            DataGridViewRow row = GridViewNhanvien.Rows[e.RowIndex];
+            username = row.Cells[1].Value.ToString();
+            txtUsername.Text = username;
+            txtFirstname.Text = row.Cells[3].Value.ToString();
+            txtLastname.Text = row.Cells[4].Value.ToString();
+            string gender = row.Cells[5].Value.ToString();
+            radioMale.Checked = true;
+            if (gender.Equals("Female"))
+                radioFemale.Checked = true;
+            dob.Value = (DateTime)row.Cells[6].Value;
+            txtAddress.Text = row.Cells[7].Value.ToString();
+            joindate.Value = (DateTime)row.Cells[8].Value;
+            string role = row.Cells[9].Value.ToString();
+            radioManager.Checked = true;
+            if (role.Equals("1"))
+                radioAdmin.Checked = true;
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -94,7 +99,45 @@ namespace AdminBanHang.GUI
             employee.role = 1;
             if (radioManager.Checked)
                 employee.role = 2;
-            employeeBLL.editEmployee(employee);
+            try
+            {
+                employeeBLL.editEmployee(employee);
+                MessageBox.Show("Sửa nhân viên thành công", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Sửa nhân viên KHÔNG thành công", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Load_on();
+        }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            EmployeeBLL employeeBLL = new EmployeeBLL();
+            try
+            {
+                employeeBLL.ChangeStatus(username);
+                MessageBox.Show("Cập nhật trạng thái thành công", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Cập nhật trạng thái KHÔNG thành công", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Load_on();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            EmployeeBLL employeeBLL = new EmployeeBLL();
+            try
+            {
+                employeeBLL.ResetPass(username);
+                MessageBox.Show("Đã cập nhật mật khẩu về mặc định", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Cập nhật mật khẩu không thành công", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             Load_on();
         }
     }

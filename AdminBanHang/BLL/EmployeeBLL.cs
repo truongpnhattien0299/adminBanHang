@@ -22,10 +22,17 @@ namespace AdminBanHang.BLL
         {
             DAL.EmployeeDAL.addEmployee(employee);
         }
-
         public void editEmployee(Employee employee)
         {
             DAL.EmployeeDAL.editEmployee(employee);
+        }
+        public void ChangeStatus(string username)
+        {
+            DAL.EmployeeDAL.ChangeStatus(username);
+        }
+        public void ResetPass(string username)
+        {
+            DAL.EmployeeDAL.ResetPass(username);
         }
     }
 }

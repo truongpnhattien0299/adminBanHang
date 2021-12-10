@@ -43,8 +43,8 @@ namespace AdminBanHang.DAL
                 conn.Open();
                 string comboname = combo.comboName;
                 string image = combo.image;
-                DateTime daystart = combo.dayStart;
-                DateTime dayend = combo.dayEnd;
+                string daystart = DBConnection.FormatDate(combo.dayStart);
+                string dayend = DBConnection.FormatDate(combo.dayEnd);
                 int total = combo.total;
                 string discountmoney = combo.discountMoney;
 
@@ -132,6 +132,7 @@ namespace AdminBanHang.DAL
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
                 DataTable dt = new DataTable();
                 dataAdapter.Fill(dt);
+                // == <= -> >= === !=
                 foreach(DataRow row in dt.Rows)
                 {
                     if(list.Count==0)

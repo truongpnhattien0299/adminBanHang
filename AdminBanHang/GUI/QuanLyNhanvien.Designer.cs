@@ -51,6 +51,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.radioFemale = new System.Windows.Forms.RadioButton();
             this.radioMale = new System.Windows.Forms.RadioButton();
+            this.btnStatus = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewNhanvien)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -216,7 +218,7 @@
             // 
             // btnThem
             // 
-            this.btnThem.Location = new System.Drawing.Point(118, 213);
+            this.btnThem.Location = new System.Drawing.Point(49, 207);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(93, 38);
             this.btnThem.TabIndex = 16;
@@ -226,7 +228,7 @@
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(227, 213);
+            this.btnSua.Location = new System.Drawing.Point(158, 207);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(86, 38);
             this.btnSua.TabIndex = 16;
@@ -266,11 +268,33 @@
             this.radioMale.Text = "Male";
             this.radioMale.UseVisualStyleBackColor = true;
             // 
+            // btnStatus
+            // 
+            this.btnStatus.Location = new System.Drawing.Point(263, 207);
+            this.btnStatus.Name = "btnStatus";
+            this.btnStatus.Size = new System.Drawing.Size(86, 38);
+            this.btnStatus.TabIndex = 16;
+            this.btnStatus.Text = "Đổi trạng thái";
+            this.btnStatus.UseVisualStyleBackColor = true;
+            this.btnStatus.Click += new System.EventHandler(this.btnStatus_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(365, 207);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(86, 38);
+            this.btnReset.TabIndex = 16;
+            this.btnReset.Text = "Reset Password";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // QuanLyNhanvien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 510);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnStatus);
             this.Controls.Add(this.btnSua);
             this.Controls.Add(this.btnThem);
             this.Controls.Add(this.label8);
@@ -329,5 +353,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RadioButton radioFemale;
         private System.Windows.Forms.RadioButton radioMale;
+        private System.Windows.Forms.Button btnStatus;
+        private System.Windows.Forms.Button btnReset;
     }
 }
